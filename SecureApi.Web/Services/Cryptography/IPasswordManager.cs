@@ -4,7 +4,7 @@ namespace SecureApi.Web.Services.Cryptography;
 
 public interface IPasswordManager
 {
-    Password CreateFromPlaintext(string plaintext);
-    Password CreateFromPlaintext(string plaintext, byte[] salt);
-    bool Verify(string plaintext, Password password);
+    Task<Password> CreateFromPlaintextAsync(string plaintext);
+    Task<Password> CreateFromPlaintextAsync(string plaintext, byte[] salt);
+    Task<bool> VerifyAsync(string plaintext, Password password);
 }

@@ -16,18 +16,22 @@ public class PasswordManagerV1
         _options = options.Value;
     }
 
-    protected override byte[] GenerateSalt()
+    protected override Task<byte[]> GenerateSaltAsync()
     {
-        return RandomNumberGenerator.GetBytes(_options.SaltSize);
+        var saltBytes = RandomNumberGenerator.GetBytes(_options.SaltSize);
+
+        return Task.FromResult(saltBytes);
     }
 
-    protected override byte[] HashPassword(string plaintext, byte[] salt)
+    protected override async Task<byte[]> HashPasswordAsync(string plaintext, byte[] salt)
     {
         using var hmac = new HMACSHA512(Convert.FromBase64String(_options.Secret));
 
         var plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+
+        using var stream = new MemoryStream(plaintextBytes.Concat(salt).ToArray(), writable: false);
         
-        var hashBytes = hmac.ComputeHash(plaintextBytes.Concat(salt).ToArray());
+        var hashBytes = await hmac.ComputeHashAsync(stream);
 
         return hashBytes;
     }

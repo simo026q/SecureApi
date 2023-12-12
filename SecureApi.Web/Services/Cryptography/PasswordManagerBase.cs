@@ -7,27 +7,27 @@ public abstract class PasswordManagerBase
 {
     protected abstract int Version { get; }
 
-    public Password CreateFromPlaintext(string plaintext)
+    public async Task<Password> CreateFromPlaintextAsync(string plaintext)
     {
-        var salt = GenerateSalt();
+        var salt = await GenerateSaltAsync();
 
-        return CreateFromPlaintext(plaintext, salt);
+        return await CreateFromPlaintextAsync(plaintext, salt);
     }
 
-    public Password CreateFromPlaintext(string plaintext, byte[] salt)
+    public async Task<Password> CreateFromPlaintextAsync(string plaintext, byte[] salt)
     {
-        var hash = HashPassword(plaintext, salt);
+        var hash = await HashPasswordAsync(plaintext, salt);
 
         return new Password(hash, salt, Version);
     }
 
-    public bool Verify(string plaintext, Password password)
+    public async Task<bool> VerifyAsync(string plaintext, Password password)
     {
-        var otherPassword = CreateFromPlaintext(plaintext, password.SaltBytes);
+        var otherPassword = await CreateFromPlaintextAsync(plaintext, password.SaltBytes);
 
         return password == otherPassword;
     }
 
-    protected abstract byte[] GenerateSalt();
-    protected abstract byte[] HashPassword(string plaintext, byte[] salt);
+    protected abstract Task<byte[]> GenerateSaltAsync();
+    protected abstract Task<byte[]> HashPasswordAsync(string plaintext, byte[] salt);
 }
