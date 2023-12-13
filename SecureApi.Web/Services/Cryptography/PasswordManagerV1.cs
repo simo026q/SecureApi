@@ -4,12 +4,12 @@ using System.Text;
 
 namespace SecureApi.Web.Services.Cryptography;
 
-public class PasswordManagerV1
+public sealed class PasswordManagerV1
     : PasswordManagerBase
 {
     private readonly PasswordManagerV1Options _options;
 
-    protected override int Version => 1;
+    public override int Version => 1;
 
     public PasswordManagerV1(IOptions<PasswordManagerV1Options> options)
     {

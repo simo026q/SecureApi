@@ -5,7 +5,7 @@ namespace SecureApi.Web.Services.Cryptography;
 public abstract class PasswordManagerBase
     : IPasswordManager
 {
-    protected abstract int Version { get; }
+    public abstract int Version { get; }
 
     public async Task<Password> CreateFromPlaintextAsync(string plaintext)
     {
