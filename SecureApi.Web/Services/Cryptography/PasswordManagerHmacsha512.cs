@@ -4,14 +4,14 @@ using System.Text;
 
 namespace SecureApi.Web.Services.Cryptography;
 
-public sealed class PasswordManagerV1
+public sealed class PasswordManagerHmacsha512
     : PasswordManagerBase
 {
-    private readonly PasswordManagerV1Options _options;
+    private readonly PasswordManagerHmacsha512Options _options;
 
     public override int Version => 1;
 
-    public PasswordManagerV1(IOptions<PasswordManagerV1Options> options)
+    public PasswordManagerHmacsha512(IOptions<PasswordManagerHmacsha512Options> options)
     {
         _options = options.Value;
     }
@@ -37,7 +37,7 @@ public sealed class PasswordManagerV1
     }
 }
 
-public sealed class PasswordManagerV1Options
+public sealed class PasswordManagerHmacsha512Options
 {
     public required int SaltSize { get; init; }
     public required string Secret { get; init; }
