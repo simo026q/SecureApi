@@ -3,11 +3,11 @@
 public sealed class PasswordManagerFactory
     : IPasswordManageFactory
 {
-    private readonly IEnumerable<IPasswordManager> _passwordManagers;
+    private readonly IPasswordManager[] _passwordManagers;
 
     public PasswordManagerFactory(IEnumerable<IPasswordManager> passwordManagers)
     {
-        _passwordManagers = passwordManagers;
+        _passwordManagers = passwordManagers.ToArray();
     }
 
     public IPasswordManager Create(int version)
