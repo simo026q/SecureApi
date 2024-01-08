@@ -39,6 +39,6 @@ public sealed class PasswordManagerHmacsha512
 
 public sealed class PasswordManagerHmacsha512Options
 {
-    public required int SaltSize { get; init; }
-    public required string Secret { get; init; }
+    public required int SaltSize { get; set; }
+    public required string Secret { get; set; }
 }
